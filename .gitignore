@@ -1,0 +1,12 @@
+# Node.js (Vite frontend)
+frontend/node_modules
+frontend/dist
+.vscode
+.env
+.DS_Store
+
+# Golang (backend)
+db_migrate/tmp
+db_migrate/vendor
+db_migrate/.env
+db_migrate/.idea
