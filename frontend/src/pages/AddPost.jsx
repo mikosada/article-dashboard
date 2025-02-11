@@ -7,13 +7,22 @@ function AddPost() {
   const [content, setContent] = useState("");
   const [category, setCategory] = useState("");
   const [status, setStatus] = useState("Draft");
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+
+  const validateForm = () => {
+    let errors = {};
+    if (title.length < 20) errors.title = "Judul minimal 20 karakter";
+    if (content.length < 200) errors.content = "Konten minimal 200 karakter";
+    if (category.length < 3) errors.category = "Kategori minimal 3 karakter";
+    setErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (title.length < 20 || content.length < 200 || category.length < 3) {
-      alert("Validasi gagal! Pastikan semua input memenuhi syarat.");
+    if (!validateForm()) {
       return;
     }
 
@@ -33,54 +42,71 @@ function AddPost() {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-xl font-bold mb-4">Add New Article</h1>
+    <div className="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+      <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
+        Add New Article
+      </h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block font-medium">Title</label>
+          <label className="block text-gray-700 font-medium">Title</label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full border p-2"
+            className={`w-full border p-3 rounded-md focus:outline-none ${
+              errors.title ? "border-red-500" : "border-gray-300"
+            }`}
             placeholder="Enter at least 20 characters"
           />
+          {errors.title && (
+            <p className="text-red-500 text-sm mt-1">{errors.title}</p>
+          )}
         </div>
 
         <div>
-          <label className="block font-medium">Content</label>
+          <label className="block text-gray-700 font-medium">Content</label>
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            className="w-full border p-2 h-32"
+            className={`w-full border p-3 rounded-md h-40 focus:outline-none ${
+              errors.content ? "border-red-500" : "border-gray-300"
+            }`}
             placeholder="Enter at least 200 characters"
           />
+          {errors.content && (
+            <p className="text-red-500 text-sm">{errors.content}</p>
+          )}
         </div>
 
         <div>
-          <label className="block font-medium">Category</label>
+          <label className="block text-gray-700 font-medium">Category</label>
           <input
             type="text"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="w-full border p-2"
+            className={`w-full border p-3 rounded-md focus:outline-none ${
+              errors.category ? "border-red-500" : "border-gray-300"
+            }`}
             placeholder="Enter at least 3 characters"
           />
+          {errors.category && (
+            <p className="text-red-500 text-sm mt-1">{errors.category}</p>
+          )}
         </div>
 
-        <div className="flex space-x-4">
+        <div className="flex justify-center space-x-4">
           <button
             type="submit"
             onClick={() => setStatus("Publish")}
-            className="px-4 py-2 bg-blue-600 text-white"
+            className="px-6 py-3 bg-blue-600 text-white font-medium rounded-lg shadow-md hover:bg-blue-700 transition-all"
           >
             Publish
           </button>
           <button
             type="submit"
             onClick={() => setStatus("Draft")}
-            className="px-4 py-2 bg-gray-400 text-white"
+            className="px-6 py-3 bg-gray-500 text-white font-medium rounded-lg shadow-md hover:bg-gray-600 transition-all"
           >
             Draft
           </button>

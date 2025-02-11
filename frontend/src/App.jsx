@@ -3,6 +3,7 @@ import Dashboard from "./pages/Dashboard";
 import AddPost from "./pages/AddPost";
 import EditPost from "./pages/EditPost";
 import Preview from "./pages/Preview";
+import "./App.css";
 
 function App() {
   return (

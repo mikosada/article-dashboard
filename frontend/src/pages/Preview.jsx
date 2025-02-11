@@ -36,25 +36,38 @@ function Preview() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="container mx-auto px-auto md:px-24 p-4">
-      <div className="flex justify-center items-center mb-8">
+    <div className="max-w-6xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
+      <div className="flex justify-start">
         <button
           onClick={() => navigate("/")}
-          className="absolute left-0 ml-4 mt-1 bg-gray-300 px-4 py-2 rounded-xl"
+          className="bg-gray-400 text-white px-4 py-2 rounded-xl"
         >
           Back to home
         </button>
-        <h1 className="text-2xl font-bold text-center">Published Articles</h1>
+      </div>
+      <div className="flex justify-center items-center mb-6">
+        <h1 className="text-3xl font-bold text-gray-800 text-center">
+          Published Articles
+        </h1>
       </div>
 
       {currentArticles.length === 0 ? (
-        <p className="text-center">Tidak ada article yang dipublish.</p>
+        <p className="text-center text-gray-500">
+          Tidak ada article yang dipublish.
+        </p>
       ) : (
         currentArticles.map((article) => (
-          <div key={article.id} className="border-b pb-4 mb-4">
-            <h2 className="text-xl font-bold">{article.title}</h2>
-            <p className="text-gray-800">Category: {article.category}</p>
-            <p className="mt-2">{article.content.substring(0, 800)}...</p>
+          <div
+            key={article.id}
+            className="border border-gray-300 p-5 rounded-lg shadow-md mb-6 hover:shadow-lg transition-all"
+          >
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              {article.title}
+            </h2>
+            <p className="text-gray-600 italic">Category: {article.category}</p>
+            <p className="mt-4 text-gray-700 leading-relaxed">
+              {article.content.substring(0, 800)}...
+            </p>
           </div>
         ))
       )}
@@ -67,8 +80,10 @@ function Preview() {
             <button
               key={i + 1}
               onClick={() => paginate(i + 1)}
-              className={`px-3 py-1 mx-1 border rounded ${
-                currentPage === i + 1 ? "bg-blue-600 text-white" : "bg-gray-300"
+              className={`px-4 py-2 mx-1 rounded-md font-medium transition-all ${
+                currentPage === i + 1
+                  ? "bg-blue-600 text-white shadow-md"
+                  : "bg-gray-200 hover:bg-gray-300"
               }`}
             >
               {i + 1}
